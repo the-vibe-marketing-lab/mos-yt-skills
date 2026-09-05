@@ -71,11 +71,11 @@ Whatever they choose becomes `--max N` (omit for the whole channel) and `--out D
 Resolve the skill folder, then run:
 
 ```bash
-SKILL_DIR=$(dirname "$(readlink -f ~/.claude/skills/mos/mos-yt-fast-scrape/SKILL.md)")
+SKILL_DIR=$(dirname "$(readlink -f ~/.claude/skills/mos-yt-fast-scrape/SKILL.md)")
 python3 "$SKILL_DIR/scripts/fast_scrape.py" "URL" [options]
 ```
 
-(If the marketing-os-skills repo is cloned somewhere other than `~/.claude/skills/mos`, adjust the path. The README install command puts it there.)
+(`setup.sh` in the mos-yt-skills repo creates that link. If you installed differently, use the path to wherever this SKILL.md lives.)
 
 Options:
 

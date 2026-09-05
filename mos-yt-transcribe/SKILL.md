@@ -205,10 +205,10 @@ Do NOT run the actor until the user confirms.
 The skill bundles `scripts/run_actor.js`. Resolve the skill folder at runtime:
 
 ```bash
-SKILL_DIR=$(dirname "$(readlink -f ~/.claude/skills/mos/mos-yt-transcribe/SKILL.md)")
+SKILL_DIR=$(dirname "$(readlink -f ~/.claude/skills/mos-yt-transcribe/SKILL.md)")
 ```
 
-(If you cloned the marketing-os-skills repo to a different path, adjust accordingly. The install command in the repo README is `git clone https://github.com/reapzyau/marketing-os-skills.git ~/.claude/skills/mos`.)
+(`setup.sh` in the mos-yt-skills repo creates that link. If you installed differently, use the path to wherever this SKILL.md lives.)
 
 Run the actor:
 
