@@ -27,8 +27,9 @@ Every commit is visible to community members.
 
 - `mos-yt-fast-scrape` — bulk transcript scraper: a whole channel, playlist or video into readable Markdown, 25 videos at a time, straight from YouTube's caption endpoint. No API key. Default output `~/Downloads/<channel-name>-yt/`
 - `mos-yt-transcribe` — SRT subtitle downloader via yt-dlp (Apify for channel discovery). Use when per-line timestamps are needed
+- `mos-yt-hook-extractor` — keyword in, hook formula out: top-ranking videos (vidIQ connector or yt-dlp search) → ranked transcripts → `openings.md` → `HOOKS.md` analysis. Default output `~/Downloads/<keyword>-hooks/`
 
-`mos-yt-fast-scrape` is the default; `mos-yt-transcribe` is the SRT special case.
+`mos-yt-fast-scrape` is the default; `mos-yt-transcribe` is the SRT special case; `mos-yt-hook-extractor` starts from a keyword.
 
 Each skill is a flat top-level folder with a `SKILL.md` (the skill prompt) and, where needed, `references/` (frameworks) or `scripts/` (deterministic tools). `setup.sh` links every top-level skill folder into `~/.claude/skills/`.
 
@@ -40,3 +41,4 @@ Each skill is a flat top-level folder with a `SKILL.md` (the skill prompt) and, 
 - Test every skill without any private infrastructure before pushing
 
 - `mos-yt-fast-scrape/scripts/fast_scrape.py` is standard-library Python. Keep it that way; members should not need to pip install anything for a single video
+- `mos-yt-hook-extractor/scripts/hook_extractor.py` imports `fast_scrape` from the sibling folder. Changing `fetch`, `slug`, `fmt_dur`, `downloads_dir`, `ytdlp_cmd`, `ID_RE` or `PARAGRAPH_SECONDS` in fast_scrape.py means re-testing the hook extractor too

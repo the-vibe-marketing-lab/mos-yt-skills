@@ -10,14 +10,16 @@ Built by [The Vibe Marketing Lab](https://www.skool.com/the-vibe-marketing-lab) 
 |---|-------|--------------|------|
 | 1 | `/mos-yt-fast-scrape` | A whole channel, playlist or video into clean Markdown transcripts, 25 videos at a time, straight from YouTube's own caption endpoint. No API key, no video download | ~40s per 500 videos |
 | 2 | `/mos-yt-transcribe` | SRT subtitle files with per-line timestamps, via yt-dlp (plus a free Apify account for full-channel discovery) | ~10s per video |
+| 3 | `/mos-yt-hook-extractor` | Type a keyword: finds the top-ranking videos (vidIQ or free YouTube search), transcribes them all, and breaks down how each one opens into a hook formula and fill-in template, with a deep dive on the top 10 | ~1 min + analysis |
 
-Use `/mos-yt-fast-scrape` by default. Reach for `/mos-yt-transcribe` only when you specifically need SRT files, for example for video editing or caption work.
+Use `/mos-yt-fast-scrape` by default. Reach for `/mos-yt-transcribe` only when you specifically need SRT files, for example for video editing or caption work. Use `/mos-yt-hook-extractor` when you start from a keyword rather than a channel and want to know how the ranking videos hook viewers.
 
 ## Prerequisites
 
 1. **Claude Code** with a Claude Pro or Max subscription.
 2. **Python 3.8+** (already on macOS and most Linux; Windows usually has it from installing Claude Code).
-3. **yt-dlp**, only for channels and playlists: `pip install yt-dlp`. Single videos need nothing else.
+3. **yt-dlp**, for channels, playlists and keyword search: `pip install yt-dlp`. Single videos need nothing else.
+4. **Optional: the vidIQ connector** in Claude, if you want `/mos-yt-hook-extractor` to use vidIQ's ranking list (costs vidIQ credits). Without it the skill uses free YouTube search.
 
 ## Install
 
@@ -52,6 +54,16 @@ or point Claude at the folder, or run `/mos-wiki-ingest` on it so the knowledge 
 ### `/mos-yt-transcribe`
 
 Paste a YouTube URL and get SRT files in `outputs/transcripts/[Channel Name]/YYYY-MM-DD-[slug].en.srt`. Single videos and playlists need only yt-dlp. Full channels need a free Apify account and `APIFY_TOKEN` in your environment; the one-time setup is walked through inside the skill.
+
+### `/mos-yt-hook-extractor`
+
+Give it a keyword, for example "AI SEO". The skill asks how many videos (default 50, top 10 studied deeply), which search to use if vidIQ is connected, and where to save (default a new `[keyword]-hooks` folder in your Downloads). Then it:
+
+1. pulls the ranking list and every transcript into numbered files (`01-...md` is rank 1), plus `INDEX.md`;
+2. cuts each video's opening into `openings.md`;
+3. reads them all and writes `HOOKS.md`: the hook formula the top videos share, a fill-in template, the gap nobody's filling, a beat-by-beat table for the top 10, and a hook type for every video.
+
+Use the template to write the opening of your own video on that topic.
 
 ## Troubleshooting
 
